@@ -4,7 +4,8 @@
   "description": "A starter repository for test-driving JavaScript code",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha",
+    "test:watch": "mocha --watch"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
     "chai": "^3.5.0",
     "chance": "^1.0.4",
     "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "ccxt": "^1.11.149"
   }
 }
