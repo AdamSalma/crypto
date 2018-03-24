@@ -1,46 +1,40 @@
-import CryptoBot from '../../src/main'
-import createBot from '../../src/runner'
-import ccxt from 'ccxt';
-
-import { expect } from 'chai';
+const { Bot, botFactory, Exchange, Strategy } = SourceCode;
 
 
-const config = {
-    exchange: {
-        id: "gdax",
-        currency: "BTC/USD",
-        auth: {},
-    },
-    strategy: {
-        buy: {
-            decrease: { percent: 10 },
-            within: "6 hours"
+describe('Bot', () => {
+
+    const config = {
+        exchange: {
+            id: "gdax",
+            currency: "BTC/USD",
+            auth: {},
         },
-        sell: {
-            increase: { percent: 10 },
-            within: "6 hours"
+        strategy: {
+            buy: {
+                decrease: { percent: 10 },
+                within: "6 hours"
+            },
+            sell: {
+                increase: { percent: 10 },
+                within: "6 hours"
+            }
         }
     }
-}
 
-
-
-describe('CryptoBot Core', () => {
-
-    it('Instanciates with a config strategy and exchange', () => {
-        const exchange = new ccxt[config.exchange.id] ();
+    it('should instanciate', () => {
+        const exchange = new Exchange(config);
         const strategy = new Strategy(config);
-        new CryptoBot(exchange, strategy, config);
+        new Bot({exchange, strategy, config});
     });
 
-
-    it('createBot injects dependencies', () => {
-        const bot = createBot(config);
+    it('should create bot from botFactory', () => {
+        const bot = botFactory(config);
     });
 
-    it('Performs a single iteration', () => {
-        const bot = createBot(config)
+    it('should iterate on market data once', async () => {
 
-        bot.next();
+        const bot = botFactory(config);
+
+        await bot.next();
     })
 });

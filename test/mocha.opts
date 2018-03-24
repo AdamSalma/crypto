@@ -1,5 +1,8 @@
 --compilers js:babel-register
+-r test/setup.js
 --recursive
 --reporter spec
 --ui bdd
--c
+--colors
+--inspect
+--no-exit
